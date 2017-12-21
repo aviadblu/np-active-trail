@@ -2,7 +2,7 @@
 
 echo Step 1 of 4: Starting app server
 
-start /b "" "C:\Program Files\nodejs\node" app.js
+start /b "" "C:\Program Files\nodejs\node" server\app.js
 
 echo Step 2 of 4: Waiting a few seconds before starting the Kiosk...
 
