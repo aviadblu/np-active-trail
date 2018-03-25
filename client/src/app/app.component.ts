@@ -9,14 +9,17 @@ import 'rxjs/add/operator/take';
 
 @Component({
     selector: 'app-root',
-    template: `
-        <header>מרכז מבקרים יד שרה ירושלים</header>
+    template: `        
         <section id="content">
+            <div class="spacer" [class.hide]="showConfirm"></div>
+            <h1 [class.hide]="showConfirm">
+                חווית הנתינה הישראלית
+            </h1>
             <div id="form-wrapper" [class.hide]="showConfirm || showLoader">
                 <form [formGroup]="newUserForm" (ngSubmit)="submit()" novalidate>
-                    <input placeholder="דואר אלקטרוני *" type="email" formControlName="email" #emailInput>
+                    <input placeholder="הכנס את כתובת המייל שלך" type="email" formControlName="email" #emailInput>
                     <button type="submit">
-                        הירשם עכשיו!
+                        הירשם עכשיו
                     </button>
                 </form>
                 <div id="error" *ngIf="error">{{error}}</div>
@@ -25,14 +28,10 @@ import 'rxjs/add/operator/take';
 
             <div id="thanks-wrapper" [class.hide]="!showConfirm">
                 <h2>
-                    תודה רבה!
+                    תודה!
                 </h2>
-                <h3>
-                    הרשמתך התקבלה בהצלחה
-                </h3>
             </div>
         </section>
-        <footer></footer>
     `,
     styles: []
 })
@@ -84,7 +83,7 @@ export class AppComponent implements AfterViewInit {
                     setTimeout(() => {
                         this.showConfirm = false;
                         this.focusInput();
-                    }, 5000);
+                    }, 15000);
                 }, err => {
                     this.error = err;
                     this.showLoader = false;

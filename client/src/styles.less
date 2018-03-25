@@ -1,5 +1,10 @@
 @import './assets/jsKeyboard/jsKeyboard.css';
 
+@font-face {
+  font-family: FbVictor-Regular;
+  src: url(/assets/fonts/FbVictor-Regular.woff);
+}
+
 html, body {
   padding: 0;
   margin: 0;
@@ -9,26 +14,8 @@ html, body {
 }
 
 body {
-  background-color: #CCCCCC;
-}
-
-header, footer {
-  display: block;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  position: absolute;
-  left: 0;
-  direction: rtl;
-}
-
-header {
-  top: 0;
-  font-weight: bold;
-  font-size: 30px;
+  background: transparent url(/assets/img/background.png) no-repeat center;
+  background-size: cover;
 }
 
 footer {
@@ -37,41 +24,61 @@ footer {
 
 #content {
   display: flex;
+  flex-direction: column;
   height: 100%;
   align-items: center;
   justify-content: center;
+
+  h1 {
+    color: #a82774;
+    flex: 1;
+    width: 100%;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    vertical-align: bottom;
+    margin: 0;
+    font-size: 80px;
+    font-family: FbVictor-Regular, arial, serif;
+  }
+
+  .spacer {
+    flex: 2;
+  }
 }
 
 #form-wrapper {
-  flex: 1;
+  flex: 4;
   height: 100px;
-  max-width: 600px;
+  width: 600px;
   text-align: center;
   margin-bottom: 200px;
 
   input {
-    display: block;
     box-sizing: border-box;
     width: 100%;
     font-size: 17px;
     height: 46px;
     line-height: 17px;
-    font-family: arial, helvetica, sans-serif;
-    text-align: right;
     border-radius: 3px;
     border: 1px solid #CCCCCC;
     padding: 0 5px;
+    text-align: center;
+    font-family: FbVictor-Regular, arial, serif;
   }
 
   button {
     margin-top: 10px;
-    background-color: #ff7f00;
+    background-color: #f2a20f;
     color: #fff;
-    font-size: 17px;
+    font-size: 25px;
     border: 0;
     border-radius: 3px;
-    height: 40px;
+    height: 50px;
+    width: 210px;
     font-weight: bold;
+    font-family: FbVictor-Regular, arial, serif;
+    letter-spacing: 2px;
   }
 }
 
@@ -84,10 +91,11 @@ footer {
   text-align: center;
   margin-bottom: 200px;
   h2 {
-    color: #ff7f00;
-    font-size: 60px;
+    color: #a82774;
+    font-size: 120px;
     margin-top: 0;
     margin-bottom: 10px;
+    font-family: FbVictor-Regular, arial, serif;
   }
   h3 {
     margin: 0;
@@ -99,7 +107,6 @@ footer {
   margin-top: 10px;
   text-align: right;
 }
-
 
 #hiddenInput {
   visibility: hidden;

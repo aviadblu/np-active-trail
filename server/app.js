@@ -34,19 +34,30 @@ app.use(express.static(clientPath))
 
 app.post('/', (req, res) => {
     if (req.body.email) {
-        db.run(`INSERT INTO contacts(email) VALUES(?)`, [req.body.email], function (err) {
-            if (err) {
-                res.status(500).send({message: err.message})
-            } else {
-                res.send({id: this.lastID});
+        db.all(`SELECT * FROM contacts WHERE email=?`, [req.body.email], (err, rows) => {
+            let sql = 'INSERT INTO contacts(email) VALUES(?)';
+            if (rows.length > 0) {
+                sql = `UPDATE contacts SET synced='false' WHERE email=?`;
             }
-        });
+            db.run(sql, [req.body.email], function (err) {
+                if (err) {
+                    console.log(err.message)
+                    consoleLog.write(err.message + '\n');
+                    res.status(500).send({message: err.message})
+                } else {
+                    console.log(`new email saved, ${req.body.email}`)
+                    consoleLog.write(`new email saved, ${req.body.email}`);
+                    res.send({id: this.lastID});
+                }
+            });
+        })
+
     } else {
         res.status(500).send({message: 'invalid payload!!'})
     }
 })
 
-const minutes = 3, the_interval = minutes * 60 * 1000;
+const minutes = 1, the_interval = minutes * 60 * 1000;
 setInterval(function () {
     db.all(`SELECT * FROM contacts WHERE synced='false'`, [], function (err, rows) {
         if (err) {
@@ -64,23 +75,48 @@ setInterval(function () {
 function sendEmailsToActiveTrail(list) {
     if (list.length > 0) {
         const email = list[0].email
+        const headers = {
+            'Authorization': '0XAEB2E75418F77FDCCC23D8C3D05A59329FC70785CD920E19B24F37430A4949DFA17F7DE74E4D6DAB87C04E9609E6F935',
+            'Content-Type': 'application/json'
+        }
+
         list.splice(0, 1)
-        request.post({
+        request({
+                method: 'POST',
                 url: 'http://webapi.mymarketing.co.il/api/contacts',
-                headers: {
-                    'Authorization': '0XAEB2E75418F77FDCCC23D8C3D05A59329FC70785CD920E19B24F37430A4949DFA17F7DE74E4D6DAB87C04E9609E6F935'
-                },
-                form: {email: email}
+                headers: headers,
+                json: {"email": email}
             },
-            (err, httpResponse, body) => {
+            (err, httpResponse) => {
                 if (err) {
                     console.log('error', err);
                     consoleLog.write(err + '\n');
                 } else {
-                    // update db
+                    const res = httpResponse.body;
+                    if (res['is_deleted']) {
+                        request({
+                                method: 'PUT',
+                                url: `http://webapi.mymarketing.co.il/api/contacts/${res['id']}`,
+                                headers: headers,
+                                json: {"is_deleted": false, "is_do_not_mail": false}
+                            },
+                            (err) => {
+                                if (err) {
+                                    console.log('error', err);
+                                    consoleLog.write(err + '\n');
+                                } else {
+                                    console.log(`is deleted status changed for ${email}`);
+                                    consoleLog.write(`is deleted status changed for ${email}`);
+                                }
+
+                            })
+                    }
+
                     console.log(`${email} synced!`);
                     consoleLog.write(`${email} synced!` + '\n');
+                    // update db
                     db.run(`UPDATE contacts SET synced='true' WHERE email=?`, [email]);
+                    //db.run(`DELETE FROM contacts WHERE email=?`, [email]);
                     setTimeout(() => {
                         sendEmailsToActiveTrail(list);
                     }, 500);

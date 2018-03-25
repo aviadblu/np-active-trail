@@ -7,13 +7,14 @@ declare var jQuery: any;
     selector: 'app-keyboard',
     template: `
         <input type="text" id="hiddenInput" #hiddenInput>
-        <div class="en" (click)="updateInputOnClick()" #keyboardWrapper id="LPVirtualKeyboard">
-            
+        <div class="en" [class.sm]="smallLayout" (click)="updateInputOnClick()" #keyboardWrapper id="LPVirtualKeyboard">
+
         </div>`,
     styles: []
 })
 export class KeyboardComponent implements OnInit {
     private focusOn;
+    public smallLayout = true;
 
     @Input('focusElement')
     set focusElement(value) {
@@ -29,6 +30,9 @@ export class KeyboardComponent implements OnInit {
     @ViewChild('hiddenInput') hiddenInput: ElementRef;
 
     constructor() {
+        if(window.screen.width > 1100) {
+            this.smallLayout = false;
+        }
     }
 
     ngOnInit() {

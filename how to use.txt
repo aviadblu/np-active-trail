@@ -1,0 +1,17 @@
+
+### Run for the first time
+
+1. copy np-server to c: result should looks like c:\np-server
+2. go to C:\np-server\bin and run "insatll_service.bat" as an administrator (right click on file and choose 'Run as administrator')
+3. open browser at http://localhost:3000/
+4. if you can see the form, you're done!
+
+
+### update existing files
+
+1. go to C:\np-server\bin and run "uninstall_service.bat" as an administrator (right click on file and choose 'Run as administrator')
+2. delete C:\np-serve folder
+3. copy new np-server folder to c: result should looks like c:\np-server
+4. go to C:\np-server\bin and run "insatll_service.bat" as an administrator (right click on file and choose 'Run as administrator')
+5. open browser at http://localhost:3000/
+6. if you can see the form, you're done!
