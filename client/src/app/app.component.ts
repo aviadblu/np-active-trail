@@ -12,9 +12,9 @@ import 'rxjs/add/operator/take';
     template: `        
         <section id="content">
             <div class="spacer" [class.hide]="showConfirm"></div>
-            <h1 [class.hide]="showConfirm">
-                חווית הנתינה הישראלית
-            </h1>
+            <!--<h1 [class.hide]="showConfirm">-->
+                <!--חווית הנתינה הישראלית-->
+            <!--</h1>-->
             <div id="form-wrapper" [class.hide]="showConfirm || showLoader">
                 <form [formGroup]="newUserForm" (ngSubmit)="submit()" novalidate>
                     <input placeholder="הכנס את כתובת המייל שלך" type="email" formControlName="email" #emailInput>

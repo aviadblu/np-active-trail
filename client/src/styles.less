@@ -90,6 +90,7 @@ footer {
   direction: rtl;
   text-align: center;
   margin-bottom: 200px;
+
   h2 {
     color: #a82774;
     font-size: 120px;
@@ -97,6 +98,7 @@ footer {
     margin-bottom: 10px;
     font-family: FbVictor-Regular, arial, serif;
   }
+
   h3 {
     margin: 0;
   }
@@ -110,5 +112,85 @@ footer {
 
 #hiddenInput {
   visibility: hidden;
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1300px) {
+  #form-wrapper {
+    flex: 12;
+    width: 800px;
+
+    input {
+      font-size: 30px;
+    }
+  }
+
+  #LPVirtualKeyboard {
+    height: 540px;
+  }
+
+  #keyboard {
+    max-width:1260px;
+  }
+
+  .button {
+    width: 85px;
+    height: 85px;
+    font-size: 3em;
+    .key {
+      padding-top:12px;
+    }
+
+    &.button_lang {
+      width: 140px;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 1024px) {
+  #form-wrapper {
+    flex: 12;
+    width: 600px;
+
+    input {
+      font-size: 24px;
+    }
+  }
+
+  #LPVirtualKeyboard {
+    &.sm {
+      height: 400px;
+
+      #keyboard {
+        max-width:980px;
+      }
+
+      .button {
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+        margin-top: 10px;
+        font-size: 1.9em;
+
+        &.button_space {
+          width: 400px;
+        }
+
+        .key {
+          padding-top:12px;
+          &.key_space {
+            width: 380px;
+          }
+        }
+
+        &.button_lang {
+          width: 140px;
+        }
+      }
+
+    }
+  }
+
+
 }
 
